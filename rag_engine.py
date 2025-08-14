@@ -1,6 +1,6 @@
 # rag_engine.py
 
-from unsloth import FastLanguageModel
+from transformers import AutoModelForCausalLM, AutoTokenizer
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
 from langchain_huggingface import HuggingFacePipeline
@@ -21,14 +21,8 @@ def load_llm_and_qa_chain():
     Returns: qa_chain
     """
     # --- Load LLM ---
-    model, tokenizer = FastLanguageModel.from_pretrained(
-        model_name=model_name,
-        max_seq_length=max_seq_length,
-        load_in_4bit=load_in_4bit,
-        dtype=None,
-        device_map="auto",
-    )
-    FastLanguageModel.for_inference(model)
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModelForCausalLM.from_pretrained(model_name)
 
     pipe = pipeline(
         "text-generation",
