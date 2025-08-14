@@ -51,10 +51,6 @@ if prompt := st.chat_input("Hãy hỏi về sức khỏe của bạn..."):
             try:
                 result = st.session_state.qa_chain.invoke({"query": prompt})
                 response = result["result"]
-<<<<<<< HEAD
-                answer = str(response).split("Hãy suy nghĩ và trả lời:")[-1]
-=======
->>>>>>> 2788a1f09c919ee2e346a7f54541b5d8dada3528
                 sources = result.get("source_documents", [])
                 
                 # Display answer
